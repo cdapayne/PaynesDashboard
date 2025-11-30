@@ -130,3 +130,6 @@ export interface WidgetConfig {
   authConfigId: string;
   customConfig?: Record<string, unknown>;
 }
+
+// Re-export social types
+export * from './social.js';

@@ -7,10 +7,17 @@
 
 import type { AnalyticsWidget, WidgetFactory } from './BaseWidget.js';
 import type { WidgetConfig, AuthConfig } from '../types/index.js';
+// Phase 2: Analytics Widgets
 import { AppleAppStoreWidgetFactory } from './AppleAppStoreWidget.js';
 import { GooglePlayWidgetFactory } from './GooglePlayWidget.js';
 import { IngramSparkWidgetFactory } from './IngramSparkWidget.js';
 import { Draft2DigitalWidgetFactory } from './Draft2DigitalWidget.js';
+// Phase 3: Social & RSS Widgets
+import { FacebookWidgetFactory } from './FacebookWidget.js';
+import { YouTubeWidgetFactory } from './YouTubeWidget.js';
+import { TikTokWidgetFactory } from './TikTokWidget.js';
+import { AmazonAffiliateWidgetFactory } from './AmazonAffiliateWidget.js';
+import { RSSFeedWidgetFactory } from './RSSFeedWidget.js';
 
 /**
  * Widget instance with its configuration
@@ -36,10 +43,17 @@ export class WidgetRegistry {
    * Register all built-in widget factories
    */
   private registerBuiltInFactories(): void {
+    // Phase 2: Analytics Widgets
     this.registerFactory(new AppleAppStoreWidgetFactory());
     this.registerFactory(new GooglePlayWidgetFactory());
     this.registerFactory(new IngramSparkWidgetFactory());
     this.registerFactory(new Draft2DigitalWidgetFactory());
+    // Phase 3: Social & RSS Widgets
+    this.registerFactory(new FacebookWidgetFactory());
+    this.registerFactory(new YouTubeWidgetFactory());
+    this.registerFactory(new TikTokWidgetFactory());
+    this.registerFactory(new AmazonAffiliateWidgetFactory());
+    this.registerFactory(new RSSFeedWidgetFactory());
   }
 
   /**
