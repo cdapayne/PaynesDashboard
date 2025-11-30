@@ -121,7 +121,7 @@ describe('Phase 3: Social Widgets', () => {
       expect(widget.type).toBe('rss_feed');
     });
 
-    it('should add and remove feeds', () => {
+    it('should add and remove feeds', async () => {
       const config: WidgetConfig = {
         id: 'test-rss-feeds',
         type: 'rss_feed',
@@ -134,7 +134,7 @@ describe('Phase 3: Social Widgets', () => {
         },
       };
 
-      const widget = new RSSFeedWidget(config);
+      const widget = await registry.createWidget(config) as RSSFeedWidget;
       
       // Add a feed
       widget.addFeed({ id: 'feed2', name: 'Feed 2', url: 'https://example.com/feed2.xml' });

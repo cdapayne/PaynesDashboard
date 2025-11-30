@@ -183,7 +183,8 @@ export class OpenAIContentGenerator {
 
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({})) as { error?: { message?: string } };
-      throw new Error(`OpenAI API error: ${response.status} - ${errorData.error?.message ?? 'Unknown error'}`);
+      const errorMessage = errorData?.error?.message ?? 'API request failed';
+      throw new Error(`OpenAI API error: ${response.status} - ${errorMessage}`);
     }
 
     const data = await response.json() as {

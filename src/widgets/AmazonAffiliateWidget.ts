@@ -122,7 +122,7 @@ export class AmazonAffiliateWidget extends BaseWidget {
         quantity: product.conversions,
         revenue: product.earnings,
         currency: affiliateMetrics.currency,
-        date: new Date(),
+        date: timeRange.endDate, // Use end of reporting period
       }));
 
       return this.createSuccessResult(salesData);

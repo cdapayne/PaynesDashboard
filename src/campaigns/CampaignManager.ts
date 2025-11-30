@@ -264,9 +264,12 @@ export class CampaignManager {
   }
 
   /**
-   * Generate a unique ID
+   * Generate a unique ID using crypto when available
    */
   private generateId(): string {
+    if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+      return crypto.randomUUID();
+    }
     return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
   }
 }
