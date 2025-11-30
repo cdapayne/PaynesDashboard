@@ -28,6 +28,8 @@
     "express-rate-limit": "^8.2.1",
     "helmet": "^8.1.0",
     "jsonwebtoken": "^9.0.2",
+    "openai": "^6.9.1",
+    "rss-parser": "^3.13.0",
     "typescript-eslint": "^8.48.0"
   },
   "devDependencies": {
