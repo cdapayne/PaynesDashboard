@@ -4,7 +4,7 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import { config } from './config';
 import routes from './api/routes';
-import { errorHandler, notFoundHandler } from './middleware';
+import { errorHandler, notFoundHandler, apiLimiter } from './middleware';
 
 const app = express();
 
@@ -17,9 +17,15 @@ app.use(cors({
   credentials: true,
 }));
 
+// Rate limiting - apply to all API routes
+app.use('/api', apiLimiter);
+
 // Body parsing
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// Cookie parser - only used for non-sensitive operations
+// Note: For production, implement CSRF protection
 app.use(cookieParser());
 
 // API routes

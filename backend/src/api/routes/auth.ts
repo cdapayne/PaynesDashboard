@@ -1,12 +1,12 @@
 import { Router, Request, Response } from 'express';
 import { userService } from '../../services';
-import { authenticateToken, AuthenticatedRequest } from '../../middleware';
+import { authenticateToken, AuthenticatedRequest, authLimiter } from '../../middleware';
 import { LoginRequest, RegisterRequest } from '../../types';
 
 const router = Router();
 
 // Register new user
-router.post('/register', async (req: Request, res: Response) => {
+router.post('/register', authLimiter, async (req: Request, res: Response) => {
   try {
     const { email, password, name }: RegisterRequest = req.body;
 
@@ -50,7 +50,7 @@ router.post('/register', async (req: Request, res: Response) => {
 });
 
 // Login
-router.post('/login', async (req: Request, res: Response) => {
+router.post('/login', authLimiter, async (req: Request, res: Response) => {
   try {
     const { email, password }: LoginRequest = req.body;
 
