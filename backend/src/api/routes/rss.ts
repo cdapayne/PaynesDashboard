@@ -50,6 +50,33 @@ router.get('/feeds', (_req: Request, res: Response) => {
   });
 });
 
+// Validate URL to prevent SSRF attacks
+function isValidRSSUrl(url: string): boolean {
+  try {
+    const parsedUrl = new URL(url);
+    // Only allow http and https protocols
+    if (!['http:', 'https:'].includes(parsedUrl.protocol)) {
+      return false;
+    }
+    // Block localhost and private IP ranges
+    const hostname = parsedUrl.hostname.toLowerCase();
+    if (
+      hostname === 'localhost' ||
+      hostname === '127.0.0.1' ||
+      hostname.startsWith('192.168.') ||
+      hostname.startsWith('10.') ||
+      hostname.startsWith('172.') ||
+      hostname === '0.0.0.0' ||
+      hostname.endsWith('.local')
+    ) {
+      return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
 // Fetch a specific feed by URL
 router.get('/fetch', async (req: Request, res: Response) => {
   const url = req.query.url as string;
@@ -58,6 +85,14 @@ router.get('/fetch', async (req: Request, res: Response) => {
     res.status(400).json({
       success: false,
       error: 'URL query parameter is required',
+    });
+    return;
+  }
+
+  if (!isValidRSSUrl(url)) {
+    res.status(400).json({
+      success: false,
+      error: 'Invalid URL. Only public HTTP/HTTPS URLs are allowed.',
     });
     return;
   }
@@ -94,6 +129,14 @@ router.post('/feeds', authenticateToken, async (req: AuthenticatedRequest, res: 
     res.status(400).json({
       success: false,
       error: 'URL is required',
+    });
+    return;
+  }
+
+  if (!isValidRSSUrl(url)) {
+    res.status(400).json({
+      success: false,
+      error: 'Invalid URL. Only public HTTP/HTTPS URLs are allowed.',
     });
     return;
   }

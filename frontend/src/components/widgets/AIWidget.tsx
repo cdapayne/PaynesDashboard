@@ -142,7 +142,7 @@ export function AIWidget() {
     setModalType(type);
   };
 
-  const handleGeneration = () => {
+  const handleGeneration = (_content: string) => {
     setGenerationCount((prev) => prev + 1);
   };
 
